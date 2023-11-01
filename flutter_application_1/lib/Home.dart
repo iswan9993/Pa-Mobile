@@ -1,108 +1,143 @@
 import 'package:flutter/material.dart';
 import 'produk.dart';
+import 'bottom_navbar.dart';
+import 'dart:async';
 
-class HomePage extends StatelessWidget {
+class HomePage extends StatefulWidget {
+  @override
+  _HomePageState createState() => _HomePageState();
+}
+
+class _HomePageState extends State<HomePage> {
+  final PageController _pageController = PageController();
+  int _currentPage = 0;
+  Timer? _timer;
+
+  @override
+  void initState() {
+    super.initState();
+    // Atur interval dan perulangan scroll otomatis
+    _timer = Timer.periodic(Duration(seconds: 3), (timer) {
+      if (_currentPage < 5) {
+        _currentPage++;
+      } else {
+        _currentPage = 0;
+      }
+      _pageController.animateToPage(_currentPage, duration: Duration(milliseconds: 500), curve: Curves.ease);
+    });
+  }
+
+  @override
+  void dispose() {
+    _pageController.dispose();
+    _timer?.cancel(); // Hentikan timer ketika widget di dispose
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        backgroundColor: Colors.white,
-        drawer: Drawer(
-          child: ListView(
-            padding: EdgeInsets.zero,
-            children: [
-              Container(
-                height: 300,
-                decoration: BoxDecoration(
-                  color: Colors.amber,
-                ),
-                child: Center(
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                  ),
-                ),
-              ),
-            ],
-          ),
-        ),
-        appBar: AppBar(
-          title: const Text(
-            'Shushi',
-            style: TextStyle(
-                fontSize: 20,
-                fontWeight: FontWeight.bold,
-                color: Colors.black,
-                fontStyle: FontStyle.italic),
-          ),
-          centerTitle: true,
-          backgroundColor: Colors.white,
-        ),
-        body: Column(
+      bottomNavigationBar: Navbar(),
+      backgroundColor: Colors.deepPurple,
+      drawer: Drawer(
+        child: ListView(
+          padding: EdgeInsets.zero,
           children: [
             Container(
-              height: 200,
-              width: 500, // Atur tinggi Container sesuai kebutuhan
-              child: PageView.builder(
-                scrollDirection: Axis.horizontal, // Mengatur scroll ke samping
-                itemCount: 6, // Ganti sesuai jumlah item Anda
-                itemBuilder: (context, index) {
-                  return Container(
-                    margin: EdgeInsets.all(10), // Atur margin sesuai kebutuhan
-                    height: 200, // Atur tinggi Container sesuai kebutuhan
-                    color: Colors.blue, // Warna latar belakang Container
-                    child: Center(
-                      child: Text('Item $index',
-                          style: TextStyle(color: Colors.white)),
-                    ),
-                  );
-                },
+              height: 300,
+              decoration: BoxDecoration(
+                color: Colors.deepPurple.shade200,
               ),
-            ),
-            SizedBox(
-              height: 40,
-              width: 230,
-              child: ElevatedButton(
-                onPressed: () {
-                  Navigator.of(context).push(
-                    MaterialPageRoute(
-                      builder: (context) =>
-                          ProdukPage(), // Pindahkan ke halaman produk
-                    ),
-                  );
-                },
-                child: Text(
-                  'Produk Selengkapnya',
-                  style: TextStyle(
-                    fontSize: 18.0, 
-                    fontWeight: FontWeight.bold,
-                    
-                   
-                   
-                  ),
+              child: Center(
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
                 ),
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: Color.fromARGB(255, 225, 231, 235),
-                  padding: EdgeInsets.all(8.0)
-                 
-                
               ),
-            )
             ),
-            // GridView.count(
-            //   crossAxisCount: 2,
-            //   children: [
-            //     Container(
-            //       height: 50,
-            //       width: 50,
-            //        color: Colors.blue,
-            //   child: Center(child: Text('Baris 1, Kolom 1')),
-            //     )
-            //   ],
-            // )
-
+          ],
+        ),
+      ),
+      appBar: AppBar(
+        title: const Text(
+          'Shushi',
+          style: TextStyle(
+            fontSize: 20,
+            fontWeight: FontWeight.bold,
+            color: Colors.black,
+            fontStyle: FontStyle.italic,
+          ),
+        ),
+        centerTitle: true,
+        backgroundColor: Colors.deepPurple.shade200,
+      ),
+      body: Column(
+        children: [
+          Container(
+            height: 200,
+            width: 500,
+            child: PageView.builder(
+              controller: _pageController,
+              scrollDirection: Axis.horizontal,
+              itemCount: 6,
+              itemBuilder: (context, index) {
+                return Container(
+                  margin: EdgeInsets.all(10),
+                  height: 200,
+                  color: Colors.blue,
+                  child: Center(
+                    child: Text('Item $index', style: TextStyle(color: Colors.white)),
+                  ),
+                );
+              },
+            ),
+          ),
+        
+             Expanded(
+               child: GridView.count(
+                shrinkWrap: true,
+                crossAxisCount: 2,
+                children: [
+                  Container(
+                    height: 200,
+                    color: Colors.amber,
+                  ),
+                  Container(
+                    height: 200,
+                    color: Colors.red,
+                  ),
+                  Container(
+                    height: 50,
+                    color: Colors.grey,
+                  ),
+                  Container(
+                    height: 50,
+                    color: Colors.blue,
+                  ),
+                  Container(
+                    height: 50,
+                    color: Colors.deepPurple,
+                  ),
+                  Container(
+                    height: 50,
+                    color: Colors.tealAccent,
+                  ),
+                  Container(
+                    height: 50,
+                    color: Colors.blueAccent,
+                  ),
+                  Container(
+                    height: 50,
+                    color: Colors.black54,
+                  ),
+             
+               
+                ],
+               ),
+             )
+         
           
-            
-          ]
-        )
-        );
+        ],
+      ),
+    );
   }
 }

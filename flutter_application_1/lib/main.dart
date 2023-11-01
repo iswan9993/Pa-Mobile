@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'Home.dart';
 import 'produk.dart';
+import 'bottom_navbar.dart';
 
 void main() {
   runApp(const MyApp());
