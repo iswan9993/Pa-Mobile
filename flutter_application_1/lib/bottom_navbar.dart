@@ -5,8 +5,8 @@ class Navbar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return CurvedNavigationBar(
-      backgroundColor: Colors.deepPurple,
-      color: Colors.deepPurple.shade200,
+      backgroundColor: Colors.deepPurple.shade200,
+      color: Colors.deepPurple,
       animationDuration: Duration(milliseconds: 300),
       items: [
         Icon(
@@ -14,7 +14,7 @@ class Navbar extends StatelessWidget {
           color: Colors.white
           ),
         Icon(
-          Icons.shopping_bag, 
+          Icons.restaurant, 
           color: Colors.white
           ),
         Icon(

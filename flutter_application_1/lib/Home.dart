@@ -38,11 +38,11 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       bottomNavigationBar: Navbar(),
-      backgroundColor: Colors.deepPurple,
+      backgroundColor: Colors.deepPurple.shade200,
       drawer: Drawer(
         child: ListView(
           padding: EdgeInsets.zero,
-          children: [
+          children: <Widget> [
             Container(
               height: 300,
               decoration: BoxDecoration(
@@ -68,72 +68,91 @@ class _HomePageState extends State<HomePage> {
           ),
         ),
         centerTitle: true,
-        backgroundColor: Colors.deepPurple.shade200,
+        backgroundColor: Colors.deepPurple,
       ),
       body: Column(
         children: [
           Container(
             height: 200,
-            width: 500,
+            width: 400,
             child: PageView.builder(
               controller: _pageController,
               scrollDirection: Axis.horizontal,
-              itemCount: 6,
+              itemCount: 8,
               itemBuilder: (context, index) {
+                List<String> imagePaths = [
+                  'images/page1.jpg',
+                  'images/page2.jpg',
+                  'images/page3.jpg',
+                  'images/page4.jpg',
+                  'images/page5.jpg',
+                  'images/page6.jpg',
+                  'images/page7.jpg',
+                  'images/page8.jpg',
+                ];
                 return Container(
-                  margin: EdgeInsets.all(10),
+                  margin: EdgeInsets.all(5),
                   height: 200,
-                  color: Colors.blue,
-                  child: Center(
-                    child: Text('Item $index', style: TextStyle(color: Colors.white)),
-                  ),
+                  width: 400,
+                  color: Colors.deepPurple,
+                  
+                    child: Image.asset(imagePaths[index],fit: BoxFit.cover,),
+                 
                 );
               },
             ),
           ),
         
-             Expanded(
-               child: GridView.count(
-                shrinkWrap: true,
-                crossAxisCount: 2,
-                children: [
-                  Container(
-                    height: 200,
-                    color: Colors.amber,
+          
+                Expanded(
+                  child: GridView(
+                  // shrinkWrap: true,
+                  gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                  crossAxisCount: 2, // Jumlah kolom
                   ),
-                  Container(
-                    height: 200,
-                    color: Colors.red,
-                  ),
-                  Container(
-                    height: 50,
-                    color: Colors.grey,
-                  ),
-                  Container(
-                    height: 50,
-                    color: Colors.blue,
-                  ),
-                  Container(
-                    height: 50,
-                    color: Colors.deepPurple,
-                  ),
-                  Container(
-                    height: 50,
-                    color: Colors.tealAccent,
-                  ),
-                  Container(
-                    height: 50,
-                    color: Colors.blueAccent,
-                  ),
-                  Container(
-                    height: 50,
-                    color: Colors.black54,
-                  ),
-             
-               
-                ],
-               ),
-             )
+                  
+                  children: [
+                    Container(
+                      margin: EdgeInsets.all(5),
+                      height: 200,
+                      color: Colors.amber,
+                      child: Image.asset('images/susi1.jpg',fit: BoxFit.cover,)
+                      
+                    ),
+                    Container(
+                       margin: EdgeInsets.all(5),
+                      height: 200,
+                      color: Colors.red,
+                       child: Image.asset('images/susi2.jpg',fit: BoxFit.cover,)
+                    ),
+                    Container(
+                       margin: EdgeInsets.all(5),
+                      height: 50,
+                      color: Colors.grey,
+                       child: Image.asset('images/susi3.jpg',fit: BoxFit.cover,)
+                    ),
+                    Container(
+                       margin: EdgeInsets.all(5),
+                      height: 50,
+                      color: Colors.blue,
+                       child: Image.asset('images/susi4.jpg',fit: BoxFit.cover,)
+                    ),
+                    Container(
+                       margin: EdgeInsets.all(5),
+                      height: 50,
+                      color: Colors.deepPurple,
+                       child: Image.asset('images/susi5.jpg',fit: BoxFit.cover,)
+                    ),
+                    Container(
+                       margin: EdgeInsets.all(5),
+                      height: 50,
+                      color: Colors.tealAccent,
+                       child: Image.asset('images/susi6.jpg',fit: BoxFit.cover,)
+                    ),         
+                  ],
+                               ),
+                ),
+            
          
           
         ],
@@ -141,3 +160,4 @@ class _HomePageState extends State<HomePage> {
     );
   }
 }
+
