@@ -74,16 +74,39 @@ class _HomePageState extends State<HomePage> {
               ),
             ),
             ListTile(
-              leading: Icon(Icons.person,size: 20,), 
-              title: Text('About Us',
-              style: TextStyle(fontSize: 20),),
+              leading: Icon(
+                Icons.person,
+                size: 20,
+              ),
+              title: Text(
+                'About Us',
+                style: TextStyle(fontSize: 20),
+              ),
               onTap: () {
-                
-                Navigator.pop(context); 
-                   Navigator.push(
+                Navigator.pop(context);
+                Navigator.push(
                   context,
                   MaterialPageRoute(
                     builder: (_) => AboutPage(),
+                  ),
+                );
+              },
+            ),
+            ListTile(
+              leading: Icon(
+                Icons.person,
+                size: 20,
+              ),
+              title: Text(
+                'cart',
+                style: TextStyle(fontSize: 20),
+              ),
+              onTap: () {
+                Navigator.pop(context);
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (_) => SushiApp(),
                   ),
                 );
               },
