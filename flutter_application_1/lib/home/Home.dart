@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/navbar/bottom_navbar.dart';
+import 'package:flutter_application_1/home/about.dart';
 import 'package:flutter_application_1/produk/produk.dart';
 import 'dart:async';
 import "package:flutter_application_1/tools/tools.dart";
@@ -79,6 +80,12 @@ class _HomePageState extends State<HomePage> {
               onTap: () {
                 
                 Navigator.pop(context); 
+                   Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (_) => AboutPage(),
+                  ),
+                );
               },
             ),
           ],
