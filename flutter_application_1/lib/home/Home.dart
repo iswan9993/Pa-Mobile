@@ -101,15 +101,7 @@ class _HomePageState extends State<HomePage> {
                 'cart',
                 style: TextStyle(fontSize: 20),
               ),
-              onTap: () {
-                Navigator.pop(context);
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (_) => SushiApp(),
-                  ),
-                );
-              },
+             
             ),
           ],
         ),
