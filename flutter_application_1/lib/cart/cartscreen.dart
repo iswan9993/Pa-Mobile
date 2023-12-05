@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_application_1/tools/tools.dart';
 
 class CartItem {
   final String name;
@@ -15,14 +14,22 @@ class CartItem {
   });
 }
 
-class CartScreen extends StatelessWidget {
-  static List<Food> cartItems = [];
+class CartScreen extends StatefulWidget {
+  static List<CartItem> cartItems = [];
+  static List<CartItem> historyItems = [];
 
+  @override
+  _CartScreenState createState() => _CartScreenState();
+}
+
+class _CartScreenState extends State<CartScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Color.fromARGB(255, 147, 125, 187),
       appBar: AppBar(
-        title: Text('Keranjang Sushi'),
+        backgroundColor: Color.fromARGB(255, 147, 125, 187),
+        title: Text('cart'),
         leading: IconButton(
           icon: Icon(Icons.arrow_back),
           onPressed: () {
@@ -34,37 +41,82 @@ class CartScreen extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.center,
         mainAxisAlignment: MainAxisAlignment.start,
         children: [
-          // Tambahkan widget atau desain lainnya di sini sesuai kebutuhan
-
-          // Gunakan ListView.builder untuk menampilkan gambar dari setiap item di keranjang
-         
-
-          // Daftar item di keranjang
           Expanded(
             child: ListView.builder(
-              itemCount: cartItems.length,
+              itemCount: CartScreen.cartItems.length,
               itemBuilder: (context, index) {
                 return ListTile(
-                  title: Text(cartItems[index].name),
+                  title: Text(CartScreen.cartItems[index].name),
                   subtitle: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text('\$${cartItems[index].price}'),
-                      Text(cartItems[index].ket),
+                      Text('\$${CartScreen.cartItems[index].price}'),
+                      Text(CartScreen.cartItems[index].ket),
                     ],
                   ),
                   leading: Image.asset(
-                    cartItems[index].imagepath,
+                    CartScreen.cartItems[index].imagepath,
                     width: 60,
                     height: 60,
                     fit: BoxFit.cover,
+                  ),
+                  trailing: IconButton(
+                    icon: Icon(Icons.delete),
+                    onPressed: () {
+                      // Hapus item dari keranjang
+                      setState(() {
+                        CartScreen.cartItems.removeAt(index);
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          SnackBar(
+                            content: Text('Item dihapus dari keranjang'),
+                          ),
+                        );
+                      });
+                    },
                   ),
                 );
               },
             ),
           ),
+          SizedBox(height: 16),
+          ElevatedButton(
+            onPressed: () {
+              // Tambahkan item ke riwayat dan hapus dari keranjang
+              addToHistory(context);
+            },
+            child: Text('Add to History'),
+          ),
         ],
       ),
     );
+  }
+
+  void addToHistory(BuildContext context) {
+    if (CartScreen.cartItems.isNotEmpty) {
+      // Add all items in the cart to history
+      CartScreen.historyItems.addAll(CartScreen.cartItems);
+
+      // Show a snackbar as a notification
+      ScaffoldMessenger.of(context)
+          .showSnackBar(
+            SnackBar(
+              content: Text('Items added to history'),
+            ),
+          )
+          .closed
+          .then((reason) {
+        // Clear the cart after the snackbar is closed
+        setState(() {
+          CartScreen.cartItems.clear();
+        });
+      });
+    } else {
+      // Show a snackbar if the cart is empty
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text('Cart is empty. Nothing added to history.'),
+        ),
+      );
+    }
   }
 }
