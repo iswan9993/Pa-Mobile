@@ -1,12 +1,17 @@
-import 'package:flutter/material.dart';
-import 'package:flutter_application_1/navbar/bottom_navbar.dart';
-import 'package:flutter_application_1/home/about.dart';
-import 'package:flutter_application_1/produk/produk.dart';
 import 'dart:async';
+
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_application_1/favoriteprovider.dart';
+import "package:flutter_application_1/food details/food_Details_Page.dart";
+import 'package:flutter_application_1/home/about.dart';
+import 'package:flutter_application_1/introduction/introduction.dart';
+import 'package:flutter_application_1/navbar/bottom_navbar.dart';
 import "package:flutter_application_1/tools/tools.dart";
-import "package:flutter_application_1/food_Details_Page.dart";
+import 'package:provider/provider.dart';
 
 class HomePage extends StatefulWidget {
+  const HomePage({super.key});
   @override
   _HomePageState createState() => _HomePageState();
 }
@@ -42,15 +47,16 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       bottomNavigationBar: Navbar(),
-      backgroundColor: Colors.deepPurple.shade200,
+      backgroundColor: const Color.fromARGB(255, 160, 157, 157),
       drawer: Drawer(
+        backgroundColor: const Color.fromARGB(255, 160, 157, 157),
         child: ListView(
           padding: EdgeInsets.zero,
           children: <Widget>[
             Container(
               height: 300,
               decoration: BoxDecoration(
-                color: Colors.deepPurple.shade200,
+                color: Color.fromARGB(255, 78, 48, 138),
               ),
               child: Center(
                 child: Column(
@@ -80,7 +86,7 @@ class _HomePageState extends State<HomePage> {
               ),
               title: Text(
                 'About Us',
-                style: TextStyle(fontSize: 20),
+                style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
               ),
               onTap: () {
                 Navigator.pop(context);
@@ -94,19 +100,31 @@ class _HomePageState extends State<HomePage> {
             ),
             ListTile(
               leading: Icon(
-                Icons.person,
+                Icons.person_add_alt_1_rounded,
                 size: 20,
               ),
               title: Text(
-                'cart',
-                style: TextStyle(fontSize: 20),
+                'Introduction',
+                style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
               ),
-             
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (_) => IntroductionPage(),
+                  ),
+                );
+              },
             ),
           ],
         ),
       ),
       appBar: AppBar(
+        actions: [
+          IconButton(onPressed: (){
+            FirebaseAuth.instance.signOut();
+          }, icon: const Icon(Icons.logout,color: Colors.black))
+        ],
         title: const Text(
           'Shushi',
           style: TextStyle(
@@ -117,7 +135,7 @@ class _HomePageState extends State<HomePage> {
           ),
         ),
         centerTitle: true,
-        backgroundColor: Colors.deepPurple,
+        backgroundColor: Color.fromARGB(255, 78, 48, 138),
       ),
       body: Column(
         children: [
@@ -143,7 +161,7 @@ class _HomePageState extends State<HomePage> {
                   margin: EdgeInsets.all(5),
                   height: 200,
                   width: 400,
-                  color: Colors.deepPurple,
+                  color: const Color.fromARGB(255, 160, 157, 157),
                   child: Image.asset(
                     imagePaths[index],
                     fit: BoxFit.cover,
@@ -166,7 +184,7 @@ class _HomePageState extends State<HomePage> {
                                 )));
                   },
                   child: Card(
-                    color: Colors.deepPurple,
+                    color: Color.fromARGB(255, 147, 125, 187),
                     child: Row(
                       children: [
                         Padding(
@@ -188,20 +206,34 @@ class _HomePageState extends State<HomePage> {
                                 style: TextStyle(
                                     fontWeight: FontWeight.bold,
                                     fontSize: 25,
-                                    color: Colors.blueAccent)),
+                                    color: const Color.fromARGB(
+                                        255, 229, 231, 235))),
                             Text('harga : ${datafoods[index].price}'),
                             ClipOval(
                               child: Material(
-                                color: Colors.blue,
-                                child: InkWell(
-                                  splashColor: Colors.red,
-                                  child: SizedBox(
+                                  color: Colors.blue,
+                                  child: InkWell(
+                                    splashColor: Colors.red,
+                                    child: SizedBox(
                                       width: 30,
                                       height: 30,
-                                      child: Icon(Icons.favorite)),
-                                  onTap: () {},
-                                ),
-                              ),
+                                      child: Icon(Icons.favorite),
+                                    ),
+                                    onTap: () {
+                                      FavoriteProvider favoriteProvider =
+                                          Provider.of<FavoriteProvider>(context,
+                                              listen: false);
+                                      favoriteProvider
+                                          .addToFavorite(datafoods[index]);
+                                      ScaffoldMessenger.of(context)
+                                          .showSnackBar(
+                                        SnackBar(
+                                          content: Text(
+                                              '${datafoods[index].name} ditambahkan ke favorit'),
+                                        ),
+                                      );
+                                    },
+                                  )),
                             )
                           ],
                         )
