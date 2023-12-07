@@ -9,6 +9,8 @@ class FoodDetailsPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    var lebar = MediaQuery.of(context).size.width;
+    var tinggi = MediaQuery.of(context).size.height;
     return Scaffold(
       backgroundColor: Color.fromARGB(255, 147, 125, 187),
       appBar: AppBar(
@@ -34,14 +36,14 @@ class FoodDetailsPage extends StatelessWidget {
               borderRadius: BorderRadius.circular(30),
               child: Image.asset(
                 food.imagepath,
-                width: 400,
-                height: 250,
+                width: lebar,
+                height: tinggi,
                 fit: BoxFit.cover,
               ),
             ),
           ),
           SizedBox(
-            height: 16,
+            height: tinggi,
           ),
           Text(
             food.name,
@@ -55,7 +57,7 @@ class FoodDetailsPage extends StatelessWidget {
             style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
           ),
           SizedBox(
-            height: 10,
+            height: tinggi,
           ),
           Padding(
             padding: const EdgeInsets.all(10),
