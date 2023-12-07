@@ -57,7 +57,7 @@ class Navbar extends StatelessWidget {
               context,
               MaterialPageRoute(
                 builder: (context) =>
-                    FavoritePage(), // Ganti FavoritePage dengan nama halaman favorit Anda
+                    FavoritePage(), // 
               ),
             );
           },
