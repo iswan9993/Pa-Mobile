@@ -1,17 +1,16 @@
 import 'dart:async';
 
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/favoriteprovider.dart';
 import "package:flutter_application_1/food details/food_Details_Page.dart";
 import 'package:flutter_application_1/home/about.dart';
-import 'package:flutter_application_1/introduction/introduction.dart';
+// import 'package:flutter_application_1/home/struck.dart';
+// import 'package:flutter_application_1/introduction/introduction.dart';
 import 'package:flutter_application_1/navbar/bottom_navbar.dart';
 import "package:flutter_application_1/tools/tools.dart";
 import 'package:provider/provider.dart';
 
 class HomePage extends StatefulWidget {
-  const HomePage({super.key});
   @override
   _HomePageState createState() => _HomePageState();
 }
@@ -107,24 +106,39 @@ class _HomePageState extends State<HomePage> {
                 'Introduction',
                 style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
               ),
-              onTap: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (_) => IntroductionPage(),
-                  ),
-                );
-              },
+              // onTap: () {
+              //   Navigator.push(
+              //     context,
+              //     MaterialPageRoute(
+              //       builder: (_) => IntroductionPage(),
+              //     ),
+              //   );
+              // },
+            ),
+            ListTile(
+              leading: Icon(
+                Icons.person_add_alt_1_rounded,
+                size: 20,
+              ),
+              title: Text(
+                'Introduction',
+                style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+              ),
+              // onTap: () {
+              //   Navigator.push(
+              //     context,
+              //     MaterialPageRoute(
+              //       builder: (_) => StruckScreen(
+              //         cartItems: [],
+              //       ),
+              //     ),
+              //   );
+              // },
             ),
           ],
         ),
       ),
       appBar: AppBar(
-        actions: [
-          IconButton(onPressed: (){
-            FirebaseAuth.instance.signOut();
-          }, icon: const Icon(Icons.logout,color: Colors.black))
-        ],
         title: const Text(
           'Shushi',
           style: TextStyle(
